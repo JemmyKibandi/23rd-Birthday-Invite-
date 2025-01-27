@@ -1,11 +1,12 @@
 import * as React from 'react';
+import { motion, AnimatePresence } from 'framer-motion'; // Import AnimatePresence
 import { Typewriter } from "react-simple-typewriter";
 import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
 import AppTheme from '../shared-theme/AppTheme';
+import Content from '../Main/Content';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
 import "@fontsource/special-elite"; 
 
@@ -29,7 +30,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
 }));
 
 const SignUpContainer = styled(Stack)(({ theme }) => ({
-  height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
+  height: 'calc((1 - var(--template-frame-height, 0)) * 50dvh)',
   minHeight: '100%',
   padding: theme.spacing(2),
   [theme.breakpoints.up('sm')]: {
@@ -51,104 +52,85 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
+const ballStyle = {
+  width: 100,
+  height: 100,
+  backgroundColor: "#dd00ee",
+  borderRadius: "50%",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  color: "#fff",
+  fontSize: "2rem",
+  fontWeight: "bold",
+  position: "relative",
+};
+
 export default function Main(props) {
-  const [emailError, setEmailError] = React.useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
-  const [passwordError, setPasswordError] = React.useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
-  const [nameError, setNameError] = React.useState(false);
-  const [nameErrorMessage, setNameErrorMessage] = React.useState('');
+  const [showBall, setShowBall] = React.useState(true);
 
-  const validateInputs = () => {
-    const email = document.getElementById('email');
-    const password = document.getElementById('password');
-    const name = document.getElementById('name');
-
-    let isValid = true;
-
-    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-      setEmailError(true);
-      setEmailErrorMessage('Please enter a valid email address.');
-      isValid = false;
-    } else {
-      setEmailError(false);
-      setEmailErrorMessage('');
-    }
-
-    if (!password.value || password.value.length < 6) {
-      setPasswordError(true);
-      setPasswordErrorMessage('Password must be at least 6 characters long.');
-      isValid = false;
-    } else {
-      setPasswordError(false);
-      setPasswordErrorMessage('');
-    }
-
-    if (!name.value || name.value.length < 1) {
-      setNameError(true);
-      setNameErrorMessage('Name is required.');
-      isValid = false;
-    } else {
-      setNameError(false);
-      setNameErrorMessage('');
-    }
-
-    return isValid;
-  };
-
-  const handleSubmit = (event) => {
-    if (nameError || emailError || passwordError) {
-      event.preventDefault();
-      return;
-    }
-    const data = new FormData(event.currentTarget);
-    console.log({
-      name: data.get('name'),
-      lastName: data.get('lastName'),
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+  // Simulate the ball disappearing after 2 seconds (you can adjust the time as needed)
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowBall(false); // Trigger exit animation
+    }, 2000); // Ball will disappear after 2 seconds
+    return () => clearTimeout(timer); // Cleanup on unmount
+  }, []);
 
   return (
     <AppTheme {...props}>
-    <CssBaseline enableColorScheme />
-    <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
-    <SignUpContainer direction="column" justifyContent="center" alignItems="center">
-    <Card
-  variant="outlined"
-  sx={{
-    padding: 4,
-    textAlign: 'center',
-    borderRadius: 3, // Increase this value for more rounded corners
-  }}
->        {/* <Typography
-          component="h1"
-          variant="h4"
-          sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)', marginBottom: 2 }}
+      <CssBaseline enableColorScheme />
+      <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
+
+      <SignUpContainer direction="column" justifyContent="center" alignItems="center">
+        {/* Wrap the animated ball with AnimatePresence */}
+        <AnimatePresence>
+          {showBall && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0 }} // Make it fade out and scale down
+              transition={{
+                type: "inertia",
+                velocity: 10,
+                bounceDamping: 10,
+                bounceStiffness: 100,
+                // delay: 0.5, // Delay before the animation starts
+              }}
+              style={ballStyle}
+            >
+              23
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <Card
+          variant="outlined"
+          sx={{
+            padding: 4,
+            textAlign: 'center',
+            borderRadius: 3,
+          }}
         >
-         Hi
-        </Typography> */}
-        <h1
-        style={{
-          fontFamily: "'Special Elite', monospace", // Apply the fancy typewriter font
-          fontSize: "2rem", 
-          color: "#333", // Optional: Change color for styling
-        }}
-      >
-        <Typewriter
-          words={["You have been Invited to Jem's Birthday", "I really can't wait, auuuuuu 💃🏾"]}
-          loop={1} // Ensures the animation runs once and stops
-          cursor     
-          cursorStyle="|"
-          typeSpeed={100}
-          deleteSpeed={50}
-          delaySpeed={1000}
-        />
-      </h1>
-      </Card>
-    </SignUpContainer>
-  </AppTheme>
-  
+          <h1
+            style={{
+              fontFamily: "'Special Elite', monospace", // Apply the fancy typewriter font
+              fontSize: "2rem", 
+              color: "#333", // Optional: Change color for styling
+            }}
+          >
+            <Typewriter
+              words={["You have been Invited to Jem's Birthday", "I really can't wait, auuuuuu 💃🏾"]}
+              loop={1} // Ensures the animation runs once and stops
+              cursor     
+              cursorStyle="|"
+              typeSpeed={100}
+              deleteSpeed={50}
+              delaySpeed={1000}
+            />
+          </h1>
+        </Card>
+      </SignUpContainer>
+    </AppTheme>
   );
 }
