@@ -6,7 +6,6 @@ import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
 import AppTheme from '../shared-theme/AppTheme';
-import Content from '../Main/Content';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
 import "@fontsource/special-elite"; 
 
