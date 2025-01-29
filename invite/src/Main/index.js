@@ -7,13 +7,15 @@ import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
 import AppTheme from '../shared-theme/AppTheme';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
-import "@fontsource/special-elite"; 
-
+import "@fontsource/special-elite";
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
+  justifyContent: 'center', // Center content vertically
+  alignItems: 'center', // Center content horizontally
   alignSelf: 'center',
   width: '100%',
+  height: '100vh', // Make the card span the full viewport height
   padding: theme.spacing(4),
   gap: theme.spacing(2),
   margin: 'auto',
@@ -21,12 +23,14 @@ const Card = styled(MuiCard)(({ theme }) => ({
     'hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px',
   [theme.breakpoints.up('sm')]: {
     width: '450px',
+    height: 'auto', // Allow height to adjust on larger screens if necessary
   },
   ...theme.applyStyles('dark', {
     boxShadow:
       'hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px',
   }),
 }));
+
 
 const SignUpContainer = styled(Stack)(({ theme }) => ({
   height: 'calc((1 - var(--template-frame-height, 0)) * 50dvh)',
@@ -114,14 +118,14 @@ export default function Main(props) {
           <h1
             style={{
               fontFamily: "'Special Elite', monospace", // Apply the fancy typewriter font
-              fontSize: "2rem", 
+              fontSize: "2rem",
               color: "#333", // Optional: Change color for styling
             }}
           >
             <Typewriter
               words={["You have been Invited to Jem's Birthday", "I really can't wait, auuuuuu 💃🏾"]}
               loop={1} // Ensures the animation runs once and stops
-              cursor     
+              cursor
               cursorStyle="|"
               typeSpeed={100}
               deleteSpeed={50}
@@ -129,7 +133,56 @@ export default function Main(props) {
             />
           </h1>
         </Card>
+        
+        <Card
+  variant="outlined"
+  sx={{
+    padding: 4,
+    textAlign: 'center',
+    borderRadius: 3,
+    position: 'relative', // Ensures proper placement of the border
+    borderTop: '10px solid #FF5733', // Adds a colored border to the top
+  }}
+>
+  <h1
+    style={{
+      fontFamily: "'Special Elite', monospace", // Apply the fancy typewriter font
+      fontSize: "2rem",
+      color: "#333", // Optional: Change color for styling
+    }}
+  > Hello there ❤️<br></br>
+  <Typewriter
+  words={[ // Part 1: Introduction
+    "🎉 YOU'VE BEEN INVITED! 🎉",
+    "Hey, it's Jem's BIG DAY, and I’m turning 23! 🥳 Get ready for a wild celebration, full of surprises, laughter, and memories that will last a lifetime!",
+    "I really can't wait to celebrate with YOU, auuuuuu 💃🏾",
+    
+    // Part 2: Event Details
+    "Date: [Insert Date]",
+    "Time: [Insert Time]",
+    "Location: [Insert Location]",
+    "",  // Line break
+    
+    // Part 3: Fun Call to Action
+    "Come for the cake, stay for the fun! 🎂🎈",
+    "Mark your calendars, and let’s make this a day to remember!"
+  ]}
+  loop={1} // Ensures the animation runs once and stops
+  cursor
+  cursorStyle="|"
+  typeSpeed={200} // Slower typing speed (default is 100)
+  deleteSpeed={100} // Slower deletion speed
+  delaySpeed={6000} // Longer pause between words (3 seconds)
+  autoStartDelay={6000} // Add a 3-second delay before the animation starts
+/>
+
+  </h1>
+</Card>
+
+
       </SignUpContainer>
+
     </AppTheme>
+
   );
 }
